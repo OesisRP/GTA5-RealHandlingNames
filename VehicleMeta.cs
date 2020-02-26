@@ -426,9 +426,19 @@ namespace GTA5_RealHandlingNames
         public string Encoding { get; set; }
     }
 
-    public enum Name { Null, VehMountedTurretLimo, VehMountedTurretsHeli };
+    public enum Name
+    {
+        Null, 
+        VehMountedTurretLimo, 
+        VehMountedTurretsHeli
+    };
 
-    public enum ExplosionInfo { ExplosionInfoBoatMedium, ExplosionInfoBoatSmall, ExplosionInfoBoatToro, ExplosionInfoDefault,
+    public enum ExplosionInfo 
+    { 
+        ExplosionInfoBoatMedium, 
+        ExplosionInfoBoatSmall, 
+        ExplosionInfoBoatToro, 
+        ExplosionInfoDefault,
         ExplosionInfoTruck,
         ExplosionInfoTanker,
         ExplosionInfoPropTrailer,
@@ -436,36 +446,61 @@ namespace GTA5_RealHandlingNames
         ExplosionInfoTitan,
         ExplosionInfoMarquis,
         ExplosionInfoRaptor,
-        ExplosionInfoMicroLight
+        ExplosionInfoMicroLight,
+        ExplosionInfoMiljet,
+        ExplosionInfoBlimp2
     };
 
-    public enum Content { FloatArray };
+    public enum Content
+    {
+        FloatArray
+    };
 
-    public enum TypeEnum { Null,
+    public enum TypeEnum 
+    {
+        Null,
         OverrideRagdollThreshold
     };
 
-    public enum PlateType { VptBackPlates, VptFrontAndBackPlates, VptNone,
+    public enum PlateType 
+    { 
+        VptBackPlates,
+        VptFrontAndBackPlates,
+        VptNone,
         VptFrontPlates
     };
 
-    public enum Swankness { Swankness2, Swankness3, Swankness4, Swankness5,
+    public enum Swankness 
+    {
+        Swankness2,
+        Swankness3, 
+        Swankness4,
+        Swankness5,
         Swankness1,
         Swankness0
     };
 
-    public enum ItemType { VehicleTypeBoat, VehicleTypeCar, VehicleTypeHeli,
+    public enum ItemType 
+    {
+        VehicleTypeBoat,
+        VehicleTypeCar, 
+        VehicleTypeHeli,
         VehicleTypeTrailer,
         VehicleTypeQuadbike,
         VehicleTypeBlimp
     };
 
-    public enum WheelType { VwtHiend, VwtMuscle, VwtSport, VwtSuv,
-        VWT_BIKE,
-        VWT_TUNER,
-        VWT_OFFROAD,
-        VWT_LOWRIDER,
-        VWT_SUPERMOD3
+    public enum WheelType 
+    {
+        VwtHiend,
+        VwtMuscle, 
+        VwtSport, 
+        VwtSuv,
+        VwtBike,
+        VwtTuner,
+        VwtOffroad,
+        VwtLowrider,
+        VwtSupermod3
     };
 
     public partial struct DashboardType
@@ -594,6 +629,10 @@ namespace GTA5_RealHandlingNames
             var value = serializer.Deserialize<string>(reader);
             switch (value)
             {
+                case "EXPLOSION_INFO_BLIMP2":
+                    return ExplosionInfo.ExplosionInfoBlimp2;
+                case "EXPLOSION_INFO_MILJET":
+                    return ExplosionInfo.ExplosionInfoMiljet;
                 case "EXPLOSION_INFO_MICROLIGHT":
                     return ExplosionInfo.ExplosionInfoMicroLight;
                 case "EXPLOSION_INFO_RAPTOR":
@@ -889,15 +928,15 @@ namespace GTA5_RealHandlingNames
             switch (value)
             {
                 case "VWT_SUPERMOD3":
-                    return WheelType.VWT_SUPERMOD3;
+                    return WheelType.VwtSupermod3;
                 case "VWT_LOWRIDER":
-                    return WheelType.VWT_LOWRIDER;
+                    return WheelType.VwtLowrider;
                 case "VWT_OFFROAD":
-                    return WheelType.VWT_OFFROAD;
+                    return WheelType.VwtOffroad;
                 case "VWT_BIKE":
-                    return WheelType.VWT_BIKE;
+                    return WheelType.VwtBike;
                 case "VWT_TUNER":
-                    return WheelType.VWT_TUNER;
+                    return WheelType.VwtTuner;
                 case "VWT_HIEND":
                     return WheelType.VwtHiend;
                 case "VWT_MUSCLE":
