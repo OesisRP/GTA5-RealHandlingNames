@@ -18,16 +18,16 @@ namespace GTA5_RealHandlingNames
 
         private static void HandlingNames()
         {
-            Dictionary<string, string> result = new Dictionary<string, string>();
+            Dictionary<uint, uint> result = new Dictionary<uint, uint>();
             int realHandlingNames = 0;
 
             var sw = new Stopwatch();
             sw.Start();
 
-            var directory = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "vehicle-metas"));
+            var directory = new DirectoryInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory ?? string.Empty, "vehicle-metas"));
             if (!directory.Exists)
             {
-                Console.WriteLine($"Path {Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "vehicle-metas")} is invalid");
+                Console.WriteLine($"Path {Path.Combine(AppDomain.CurrentDomain.BaseDirectory ?? string.Empty, "vehicle-metas")} is invalid");
                 return;
             }
 
@@ -50,21 +50,22 @@ namespace GTA5_RealHandlingNames
                     }
                 }
 
-                string json = JsonConvert.SerializeXmlNode(doc, Formatting.Indented);
+                var json = JsonConvert.SerializeXmlNode(doc, Formatting.Indented);
                 var vehicleMeta = JsonConvert.DeserializeObject<VehiclesMeta>(json, Converter.Settings);
+                if(vehicleMeta == null) throw new Exception($"Couldn't convert meta file in file {fileInfo.FullName}.");
                 foreach (var vehicleInfo in vehicleMeta.CVehicleModelInfoInitDataList.InitDatas.Item)
                 {
-                    if (!result.ContainsKey(vehicleInfo.ModelName.ToUpper()))
+                    if (!result.ContainsKey(GTA5Hasher.GetHashKey(vehicleInfo.ModelName)))
                     {
                         realHandlingNames++;
-                        result.Add(vehicleInfo.ModelName.ToUpper(), vehicleInfo.HandlingId.ToUpper());
+                        result.Add(GTA5Hasher.GetHashKey(vehicleInfo.ModelName), GTA5Hasher.GetHashKey(vehicleInfo.HandlingId));
                     }
                 }
             }
 
             File.WriteAllText("realHandlingNames.json", JsonConvert.SerializeObject(result, Formatting.Indented));
             sw.Stop();
-            Console.WriteLine($"Converted {realHandlingNames} handling names in {sw.ElapsedMilliseconds}.");
+            Console.WriteLine($"Converted {realHandlingNames} handling names in {sw.ElapsedMilliseconds} ms.");
         }
 
         private static void AddJsonNetRootAttribute(XmlDocument xmlD)
