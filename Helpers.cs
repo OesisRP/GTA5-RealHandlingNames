@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GTA5_RealHandlingNames
+﻿namespace GTA5_RealHandlingNames
 {
     public static class GTA5Hasher
     {
@@ -29,7 +25,7 @@ namespace GTA5_RealHandlingNames
         private static uint GetHashKeySubString(string str, uint initialHash)
         {
             var hash = initialHash;
-            for (int i = 0; i < str.Length; i++)
+            for (var i = 0; i < str.Length; i++)
             {
                 hash += m_LookupTable[str[i]];
                 hash += (hash << 10);
